@@ -9,9 +9,9 @@ app.disable('x-powered-by')
 
 // midleware
 app.use(function (req, res, next) {
+  console.log('---')
   console.log(req.method)
   console.log(req.url)
-  console.log('---')
   next()
 })
 app.use(express.json())
