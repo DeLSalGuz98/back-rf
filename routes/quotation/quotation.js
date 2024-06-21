@@ -1,9 +1,15 @@
 const express = require('express')
+const { validateQuotationPartialData } = require('../../schemas/quotation')
 const router = express.Router()
 
 // post: guardar datos iniciales de cotizacion `/quotation`
 router.post('/', function (req, res) {
-  return res.status(200).json({"message": "guardar datos iniciales de cotizacion"})
+  const validatedData = validateQuotationPartialData(req.body)
+  if(validatedData.error){
+    return res.status(400).json({error: JSON.parse(validatedData.error.message)})
+  }
+  console.log(validatedData.data)
+  return res.sendStatus(201)
 })
 
 // get: obtener lista de cotizaciones `/quotation/`
@@ -32,17 +38,31 @@ router.get('/:nroQuotation', function (req, res) {
 
 // put: actualizar datos de la cotizacion `/quotation/:nroQuotation`
 router.put('/:nroQuotation', function (req, res) {
-  return res.status(200).json({"message": "actualizar datos de la cotizacion"})
+  const {nroQuotation} = req.params
+  const validatedData = validateQuotationPartialData({numberQuotation: nroQuotation,  ...req.body})
+  if(validatedData.error){
+    return res.status(400).json({error: JSON.parse(validatedData.error.message)})
+  }
+  console.log(validatedData.data)
+  return res.sendStatus(200)
 })
 
 // patch: actualizar estado de la cotizacion `/quotation/:nroQuotation`
 router.patch('/:nroQuotation', function (req, res) {
-  return res.status(200).json({"message": "actualizar estado de la cotizacion"})
+  const {nroQuotation} = req.params
+  const validatedData = validateQuotationPartialData({numberQuotation: nroQuotation,  ...req.body})
+  if(validatedData.error){
+    return res.status(400).json({error: JSON.parse(validatedData.error.message)})
+  }
+  console.log(validatedData.data)
+  return res.sendStatus(200)
 })
 
 // delete: elminar la cotizacion`/quotation/:nroQuotation`
 router.delete('/:nroQuotation', function (req, res) {
-  return res.status(200).json({"message": "elminar la cotizacion"})
+  const {nroQuotation} = req.params
+  const validatedData = validateQuotationPartialData({numberQuotation: nroQuotation})
+  return res.sendStatus(200)
 })
 
 module.exports = router

@@ -21,7 +21,7 @@ app.use(cors())
 
 //routes
 app.use('/company', company)
-app.use('/quoatation', quotation)
+app.use('/quotation', quotation)
 
 app.get('/', function (req, res) {
   res.status(200).send('iniciando RF API')
