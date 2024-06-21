@@ -1,9 +1,15 @@
 const express = require('express')
+const validateOrderPartialData = require('../../schemas/order')
 
 const router = express.Router()
 
 // post: guardar datos iniciales de la orden de compra. `/purchase-order/`
 router.post('/', function (req, res) {
+  const validatedData = validateOrderPartialData(req.body)
+  if(validatedData.error){
+    return res.status(400).json({error: JSON.parse(validatedData.error.message)})
+  }
+  console.log(validatedData.data)
   return res.sendStatus(201)
 })
 
@@ -26,22 +32,42 @@ router.get('/payment-tracking', function (req, res) {
 })
 // put: actualizar los datos de la orden de compra. `/purchase-order/:nroOrder`
 router.put('/:nroOrder', function (req, res) {
-  
+  const {nroOrder} = req.params
+  const validatedData = validateOrderPartialData({numberOrder: nroOrder, ...req.body})
+  if(validatedData.error){
+    return res.status(400).json({error: JSON.parse(validatedData.error.message)})
+  }
+  console.log(validatedData.data)
   return res.sendStatus(200)
 })
 // patch: actualizar el estado de la orden de compra. `/purchase-order/state/:nroOrder`
 router.patch('/state/:nroOrder', function (req, res) {
-  
+  const {nroOrder} = req.params
+  const validatedData = validateOrderPartialData({numberOrder: nroOrder, ...req.body})
+  if(validatedData.error){
+    return res.status(400).json({error: JSON.parse(validatedData.error.message)})
+  }
+  console.log(validatedData.data)
   return res.sendStatus(200)
 })
 // patch: actualizar el estaddo de pago. `/purchase-order/state-payment/:nroOrder`
 router.patch('/state-payment/:nroOrder', function (req, res) {
-  
+  const {nroOrder} = req.params
+  const validatedData = validateOrderPartialData({numberOrder: nroOrder, ...req.body})
+  if(validatedData.error){
+    return res.status(400).json({error: JSON.parse(validatedData.error.message)})
+  }
+  console.log(validatedData.data)
   return res.sendStatus(200)
 })
 // delete: eliminar la orden de compra. `/purchase-order/:nroOrder`
 router.delete('/:nroOrder', function (req, res) {
-  
+  const {nroOrder} = req.params
+  const validatedData = validateOrderPartialData({numberOrder: nroOrder})
+  if(validatedData.error){
+    return res.status(400).json({error: JSON.parse(validatedData.error.message)})
+  }
+  console.log(validatedData.data)
   return res.sendStatus(200)
 })
 
