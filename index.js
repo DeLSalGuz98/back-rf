@@ -3,6 +3,7 @@ const cors = require('cors')
 //routes-module
 const company = require('./routes/company/company')
 const quotation = require('./routes/quotation/quotation')
+const puchaseOrder = require('./routes/purchase-order/order')
 
 const PORT = process.env.PORT ?? 1234
 
@@ -22,6 +23,7 @@ app.use(cors())
 //routes
 app.use('/company', company)
 app.use('/quotation', quotation)
+app.use('/purchase-order', puchaseOrder)
 
 app.get('/', function (req, res) {
   res.status(200).send('iniciando RF API')
