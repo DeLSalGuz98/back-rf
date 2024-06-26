@@ -25,10 +25,6 @@ app.use('/company', company)
 app.use('/quotation', quotation)
 app.use('/purchase-order', puchaseOrder)
 
-app.get('/', function (req, res) {
-  res.status(200).send('iniciando RF API')
-})
-
 //route 404 not found
 app.use(function (req, res) {
   res.sendStatus(404)
