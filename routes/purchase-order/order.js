@@ -1,7 +1,7 @@
-const express = require('express')
-const validateOrderPartialData = require('../../schemas/order')
+import { Router } from 'express'
+import {validateOrderPartialData} from '../../schemas/order.js'
 
-const router = express.Router()
+const router = Router()
 
 // post: guardar datos iniciales de la orden de compra. `/purchase-order/`
 router.post('/', function (req, res) {
@@ -71,4 +71,4 @@ router.delete('/:nroOrder', function (req, res) {
   return res.sendStatus(200)
 })
 
-module.exports = router
+export default router

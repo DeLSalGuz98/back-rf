@@ -1,4 +1,4 @@
-const z = require('zod')
+import z from "zod"
 
 const quotationSchema = z.object({
   numberQuotation: z.string().max(6),
@@ -18,14 +18,9 @@ const quotationSchema = z.object({
   rucResponsibleCompany:  z.string().max(11).min(11)
 })
 
-function validateQuotationData(object) {
+export function validateQuotationData(object) {
   return quotationSchema.safeParse(object)
 }
-function validateQuotationPartialData(object) {
+export function validateQuotationPartialData(object) {
   return quotationSchema.partial().safeParse(object)
-}
-
-module.exports = {
-  validateQuotationData,
-  validateQuotationPartialData
 }

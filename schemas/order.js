@@ -1,7 +1,7 @@
-const z = require('zod')
+import z from "zod"
 
 const purchaseOrderSchema = z.object({
-  numberOrder: z.string.max(6),
+  numberOrder: z.string().max(6),
   dataNotificacion: z.string().date(),
   deliveryTime: z.number().positive(),
   deadLine: z.string().date(),
@@ -15,8 +15,6 @@ const purchaseOrderSchema = z.object({
   numberQuotation: z.string().max(6)
 })
 
-function validateOrderPartialData(object) {
+export function validateOrderPartialData(object) {
   return purchaseOrderSchema.partial().safeParse(object)
 }
-
-module.exports = validateOrderPartialData

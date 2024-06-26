@@ -1,4 +1,4 @@
-const z = require('zod')
+import z from 'zod'
 
 const companySchema  = z.object({
   ruc: z.string().max(11).min(11),
@@ -13,15 +13,10 @@ const companySchema  = z.object({
 })
 
 //validamos todo el obj
-function validateCompanyData(object) {
+export function validateCompanyData(object) {
   return companySchema.safeParse(object)
 }
 //validamos partes del obj
-function validateCompanyDataUpdate(object) {
+export function validateCompanyDataUpdate(object) {
   return companySchema.partial().safeParse(object)
-}
-
-module.exports ={
-  validateCompanyData,
-  validateCompanyDataUpdate
 }

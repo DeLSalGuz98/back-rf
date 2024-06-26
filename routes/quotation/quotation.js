@@ -1,6 +1,6 @@
-const express = require('express')
-const { validateQuotationPartialData } = require('../../schemas/quotation')
-const router = express.Router()
+import { Router } from 'express'
+import { validateQuotationPartialData } from '../../schemas/quotation.js'
+const router = Router()
 
 // post: guardar datos iniciales de cotizacion `/quotation`
 router.post('/', function (req, res) {
@@ -65,4 +65,4 @@ router.delete('/:nroQuotation', function (req, res) {
   return res.sendStatus(200)
 })
 
-module.exports = router
+export default router

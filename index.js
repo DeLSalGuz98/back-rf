@@ -1,9 +1,9 @@
-const express = require('express')
-const cors = require('cors')
+import express, { json } from 'express'
+import cors from 'cors'
 //routes-module
-const company = require('./routes/company/company')
-const quotation = require('./routes/quotation/quotation')
-const puchaseOrder = require('./routes/purchase-order/order')
+import company from './routes/company/company.js'
+import quotation from './routes/quotation/quotation.js'
+import puchaseOrder from './routes/purchase-order/order.js'
 
 const PORT = process.env.PORT ?? 1234
 
@@ -17,7 +17,7 @@ app.use(function (req, res, next) {
   console.log(req.url)
   next()
 })
-app.use(express.json())
+app.use(json())
 app.use(cors())
 
 //routes

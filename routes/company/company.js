@@ -1,6 +1,6 @@
-const express = require('express')
-const { validateCompanyData, validateCompanyDataUpdate } = require('../../schemas/company')
-const router = express.Router()
+import { Router } from 'express'
+import { validateCompanyData, validateCompanyDataUpdate } from '../../schemas/company.js'
+const router = Router()
 
 // post: crear nueva empresa ` /company/ `
 router.post('/', function(req, res) {
@@ -49,4 +49,4 @@ router.delete('/:rucCompany', function(req, res) {
   res.status(200).json({"message": "eliminar empresa"})
 })
 
-module.exports = router
+export default router
