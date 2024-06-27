@@ -1,14 +1,16 @@
 import { OrderModel } from "../models/order-model.js"
 import {validateOrderPartialData} from '../schemas/order.js'
-import format from 'date-format'
+// import format from 'date-format'
+import { deadlineCalculator } from "../utils/deadline-calculator.js"
 
 export class PurchaseOrderController{
   static async SavePurchaseOrder(req, res) {
     const {dateNotificacion, deliveryTime} = req.body
-    const notificaion = new Date(dateNotificacion)
-    const deadLine = new Date((notificaion.valueOf() + ((deliveryTime + 1) * 1000 * 60 * 60 * 24)))
+    const deadLine = deadlineCalculator(dateNotificacion, deliveryTime)
+    // const notificaion = new Date(dateNotificacion)
+    // const deadLine = new Date((notificaion.valueOf() + ((deliveryTime + 1) * 1000 * 60 * 60 * 24)))
     const validatedData = validateOrderPartialData({
-      deadLine: format("yyyy-MM-dd", deadLine),
+      deadLine: deadLine,
       stateOrder:"pendiente",
       statePaymentOrder:"pendiente",
       ...req.body
@@ -43,7 +45,12 @@ export class PurchaseOrderController{
   }
   static async UpdatePurchaseOrder (req, res) {
     const {nroOrder} = req.params
-    const validatedData = validateOrderPartialData({numberOrder: nroOrder, ...req.body})
+    const {dateNotificacion, deliveryTime} = req.body
+    const deadLine = deadlineCalculator(dateNotificacion, deliveryTime)
+    const validatedData = validateOrderPartialData({
+      numberOrder: nroOrder,
+      deadLine: deadLine, 
+      ...req.body})
     if(validatedData.error){
       return res.status(400).json({error: JSON.parse(validatedData.error.message)})
     }
