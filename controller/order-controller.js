@@ -1,14 +1,11 @@
 import { OrderModel } from "../models/order-model.js"
 import {validateOrderPartialData} from '../schemas/order.js'
-// import format from 'date-format'
 import { deadlineCalculator } from "../utils/deadline-calculator.js"
 
 export class PurchaseOrderController{
   static async SavePurchaseOrder(req, res) {
     const {dateNotificacion, deliveryTime} = req.body
     const deadLine = deadlineCalculator(dateNotificacion, deliveryTime)
-    // const notificaion = new Date(dateNotificacion)
-    // const deadLine = new Date((notificaion.valueOf() + ((deliveryTime + 1) * 1000 * 60 * 60 * 24)))
     const validatedData = validateOrderPartialData({
       deadLine: deadLine,
       stateOrder:"pendiente",
