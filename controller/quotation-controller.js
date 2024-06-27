@@ -1,8 +1,12 @@
 import { validateQuotationPartialData } from '../schemas/quotation.js'
 import { QuotationModel } from '../models/quotation-model.js'
+import { removeBlankSpaces } from '../utils/remove-spaces.js'
+
 export class QuotationController{
   static async SaveQuotation(req, res){
-    const validatedData = validateQuotationPartialData(req.body)
+    const {sellers} = req.body
+    const newSellers = removeBlankSpaces(sellers)
+    const validatedData = validateQuotationPartialData({stateQuotation: "pendiente", ...req.body, sellers: newSellers})
     if(validatedData.error){
       return res.status(400).json({error: JSON.parse(validatedData.error.message)})
     }
