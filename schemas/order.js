@@ -2,7 +2,7 @@ import z from "zod"
 
 const purchaseOrderSchema = z.object({
   numberOrder: z.string().max(6),
-  dataNotificacion: z.string().date(),
+  dateNotificacion: z.string().date(),
   deliveryTime: z.number().positive(),
   deadLine: z.string().date(),
   expSiaf: z.string().max(10),
