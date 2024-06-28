@@ -1,30 +1,49 @@
 import { dbConnection } from "../database/conection.js"
 export class Company{
   static async SaveCompany({data}){
-    console.log(data)
+    await dbConnection(`INSERT INTO empresa (
+      ruc_empresa,  razon_social,
+      nombre_contacto,  dni,  telefono,
+      correo,  direccion,
+      cci,  entidad_bancaria
+      )VALUES(
+        ?,  ?, ?,  ?,  ?, ?,  ?, ?,  ?
+      );`, [data.ruc,  data.nameCompany.toLowerCase(), data.contact.toLowerCase(),  data.dni,  data.phoneNumber, data.email,  data.address.toLowerCase(), data.cci, data.bank.toLowerCase()])
   }
   static async GetRucAndNameCompany(){
-    const data = await dbConnection('SELECT * FROM empresa')
+    const data = await dbConnection(`
+      SELECT 
+      ruc_empresa AS ruc, 
+      razon_social AS empresa 
+      FROM empresa;
+      `)
     return data
   }
   static async GetCompanyData(ruc){
-    const data = {
-      "ruc": ruc,
-      "nameCompany":"RED FIAL E.I.R.L.",
-      "contact":"Rhodo Ajak Figueroa Gutierrez",
-      "dni":"45074635",
-      "phoneNumber":"239860137",
-      "email":"redfial@hotmail.com",
-      "address":"urb bancopata i-7",
-      "cci":"00228500258654702250",
-      "bank":"banco de credito"
-    }
+    const data = await dbConnection(`
+      SELECT 
+      ruc_empresa as ruc,
+      razon_social as empresa,
+      nombre_contacto as contacto,
+      dni,
+      telefono,
+      correo,
+      direccion,
+      cci,
+      entidad_bancaria as banco
+      FROM empresa WHERE ruc_empresa = ?;
+      `, [ruc])
     return data
   }
   static async UpdateCompanyData({data}){
-    console.log(data)
+    await dbConnection(`
+      UPDATE empresa SET nombre_contacto = ?,  dni = ?,  telefono = ?,
+      correo = ?,  direccion = ?,
+      cci = ?,  entidad_bancaria = ?
+      WHERE ruc_empresa = ?;
+      `, [data.contact.toLowerCase(), data.dni, data.phoneNumber, data.email, data.address.toLowerCase(), data.cci, data.bank.toLowerCase(), data.ruc])
   }
   static async DeleteCompanyData(ruc){
-    console.log(ruc)
+    await dbConnection(`DELETE FROM empresa WHERE ruc_empresa = ?;`, [ruc])
   }
 }
