@@ -1,12 +1,10 @@
+import { dbConnection } from "../database/conection.js"
 export class Company{
   static async SaveCompany({data}){
     console.log(data)
   }
   static async GetRucAndNameCompany(){
-    const data = [{
-      "ruc":"45214862534",
-      "company": "Empresa X"
-    }]
+    const data = await dbConnection('SELECT * FROM empresa')
     return data
   }
   static async GetCompanyData(ruc){
