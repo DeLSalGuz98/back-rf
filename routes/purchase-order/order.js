@@ -1,6 +1,4 @@
 import { Router } from 'express'
-import {validateOrderPartialData} from '../../schemas/order.js'
-import { OrderModel } from '../../models/order-model.js'
 import { PurchaseOrderController } from '../../controller/order-controller.js'
 
 const router = Router()
@@ -12,7 +10,7 @@ router.post('/', PurchaseOrderController.SavePurchaseOrder)
 router.get('/pending', PurchaseOrderController.GetListOrder)
 
 // get: obtener lista de ordenes de compra **entregados** por mes. `/purchase-order/delivered`
-router.get('/delivered', PurchaseOrderController.GetListOrder)
+router.get('/delivered', PurchaseOrderController.GetListOrderDelivered)
 
 //get: obtener lista de ordenes de compra para seguimiento de pago. `/purchase-order/payment-tracking`
 router.get('/payment-tracking', PurchaseOrderController.GetPaymentTrackingList)

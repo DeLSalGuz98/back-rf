@@ -23,6 +23,7 @@ export async function dbConnection(query, data = []) {
    
     return rows
   } catch (err) {
-    return err
+    console.log(err)  
+    return new Error("error_db")
   }
 }
