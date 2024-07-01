@@ -1,11 +1,11 @@
 import mysql from 'mysql2/promise'
 
 const dbCredentials = {
-  host: 'localhost',
-  user: 'root',
-  database: 'redfial_db',
-  password: 'password',
-  port: 3306,
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
   waitForConnections: true,
   connectionLimit: 10,
   maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`
@@ -23,7 +23,6 @@ export async function dbConnection(query, data = []) {
    
     return rows
   } catch (err) {
-    console.log(err)  
     return new Error("error_db")
   }
 }
