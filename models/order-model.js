@@ -81,14 +81,14 @@ export class OrderModel{
   static async GetPaymentTracking(){
     const data = await dbConnection(`
       SELECT
-      orden_compra.numero_oc,
-      empresa.razon_social AS empresa_responsable,
-      cotizacion.resumen_cotizacion AS descripcion,
-      cotizacion.cliente,
-      orden_compra.unidad_ejecutora,
-      orden_compra.expediente_siaf,
-      cotizacion.total_monto_venta,
-      orden_compra.estado_pago_oc AS estado_pago
+      orden_compra.numero_oc AS numberOrder,
+      empresa.razon_social AS responsibleCompany,
+      cotizacion.resumen_cotizacion AS description,
+      cotizacion.cliente AS client,
+      orden_compra.unidad_ejecutora AS executingUnit,
+      orden_compra.expediente_siaf AS expSiaf,
+      cotizacion.total_monto_venta AS purchasePrice,
+      orden_compra.estado_pago_oc AS statePaymentOrder
       FROM orden_compra
       LEFT JOIN cotizacion ON cotizacion.numero_cotizacion = orden_compra.numero_cotizacion
       LEFT JOIN empresa ON empresa.ruc_empresa = cotizacion.ruc_empresa_responsable;`)
